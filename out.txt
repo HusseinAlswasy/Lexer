@@ -1,0 +1,4 @@
+[WORD,My,0,2]
+[WORD,age,3,6]
+[WORD,is,7,9]
+[NUM,20,10,12]
