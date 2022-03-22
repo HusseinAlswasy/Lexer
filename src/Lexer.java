@@ -1,5 +1,5 @@
 import java.io.*;
-enum TokenType{WORD,NUM}
+enum TokenType{WORD,NUM,COMMENT,SINGLESEPERATORE,SINGELOPERATER,IDENTIFIER,QUOTEDSTRING}
 class Token{
      String text;
      int begin;
@@ -241,16 +241,31 @@ public class Lexer {
 		/* 4 */ YY_NO_ANCHOR,
 		/* 5 */ YY_NO_ANCHOR,
 		/* 6 */ YY_NO_ANCHOR,
-		/* 7 */ YY_NO_ANCHOR
+		/* 7 */ YY_NO_ANCHOR,
+		/* 8 */ YY_NOT_ACCEPT,
+		/* 9 */ YY_NO_ANCHOR,
+		/* 10 */ YY_NO_ANCHOR,
+		/* 11 */ YY_NO_ANCHOR,
+		/* 12 */ YY_NO_ANCHOR,
+		/* 13 */ YY_NO_ANCHOR,
+		/* 14 */ YY_NO_ANCHOR,
+		/* 15 */ YY_NO_ANCHOR,
+		/* 16 */ YY_NOT_ACCEPT,
+		/* 17 */ YY_NOT_ACCEPT,
+		/* 18 */ YY_NOT_ACCEPT,
+		/* 19 */ YY_NOT_ACCEPT
 	};
 	private int yy_cmap[] = unpackFromString(1,130,
-"6:9,4,0,6,4:2,6:18,4,6:15,3,2:9,6:7,1:26,6,4,6:4,1:13,5,1:12,6:5,7:2")[0];
+"6:9,7,0,6,7:2,6:18,7,6,11,6:5,8:2,5,9,8,9,6,4,3,2:9,6,8,6:5,1:26,6,7,6:2,10" +
+",6,1:13,12,1:12,6:5,13:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,8,
-"0,1,2,3:2,4,5,3")[0];
+	private int yy_rmap[] = unpackFromString(1,20,
+"0,1,2,3,4:2,5,4,6,4,7,8,9,4:2,10:2,7,11,12")[0];
 
-	private int yy_nxt[][] = unpackFromString(6,8,
-"-1,1,2,7,5,6,3,4,-1,1:3,-1,1,-1:4,2:2,-1:16,5:2,-1:3,1:3,5,6,-1:2");
+	private int yy_nxt[][] = unpackFromString(13,14,
+"-1,1,2,13,3,14,4,11,5,14,6,15,12,7,-1,1:3,-1:6,6,-1,1,-1:3,2:2,-1:15,8,-1:2" +
+"3,6:3,-1:6,6,-1,6,-1:6,17,-1:9,17:4,19,17:7,-1:8,11,-1:4,11,-1:2,1:3,-1:3,1" +
+"1,-1:2,6,-1,12,-1:2,16:10,9,16,-1:2,17:3,10,18,17:7,-1:2,17:4,18,17:7,-1");
 
 	public Token getNextToken ()
 		throws java.io.IOException {
@@ -309,24 +324,52 @@ public class Lexer {
 					case -4:
 						break;
 					case 3:
-						{System.out.println("Error");}
+						{return new Token(TokenType.SINGELOPERATER,yytext(),yychar,yychar+yytext().length());}
 					case -5:
 						break;
 					case 4:
-						
+						{System.out.println("Error");}
 					case -6:
 						break;
 					case 5:
-						{}
+						{return new Token(TokenType.SINGLESEPERATORE,yytext(),yychar,yychar+yytext().length());}
 					case -7:
 						break;
 					case 6:
-						{return new Token(TokenType.WORD,yytext(),yychar,yychar+yytext().length());}
+						{return new Token(TokenType.IDENTIFIER,yytext(),yychar,yychar+yytext().length());}
 					case -8:
 						break;
 					case 7:
-						{return new Token(TokenType.NUM,yytext(),yychar,yychar+yytext().length());}
+						
 					case -9:
+						break;
+					case 9:
+						{return new Token(TokenType.QUOTEDSTRING,yytext(),yychar,yychar+yytext().length());}
+					case -10:
+						break;
+					case 10:
+						{return new Token(TokenType.COMMENT,yytext(),yychar,yychar+yytext().length());}
+					case -11:
+						break;
+					case 11:
+						{}
+					case -12:
+						break;
+					case 12:
+						{return new Token(TokenType.WORD,yytext(),yychar,yychar+yytext().length());}
+					case -13:
+						break;
+					case 13:
+						{return new Token(TokenType.NUM,yytext(),yychar,yychar+yytext().length());}
+					case -14:
+						break;
+					case 14:
+						{return new Token(TokenType.SINGELOPERATER,yytext(),yychar,yychar+yytext().length());}
+					case -15:
+						break;
+					case 15:
+						{System.out.println("Error");}
+					case -16:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
